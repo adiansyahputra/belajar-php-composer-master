@@ -1,0 +1,60 @@
+Pengenalan Composer
+
+Sebelum Dependency Management
+Saat kita membuat aplikasi, biasanya kita sering sekali membutuhkan library atau framework
+Sebelum menggunakan dependency management, jika kita membutuhkan library atau framework, maka kita perlu download library atau framework tersebut secara manual. Setelah itu kita masukkan ke dalam kode program kita
+Jika library nya sederhana, mungkin masih mudah untuk mengelolanya, tapi bagaimana jika ternyata library tersebut membutuhkan library lain, dan tidak hanya satu, tapi ada banyak?
+Alhasil kita harus download semua library yang dibutuhkan oleh library yang kita gunakan
+Belum lagi, kita harus tahu versi berapa library lain yang digunakan oleh library yang kita gunakan
+Dan kadang project kita pun menjadi bengkak karena ukuran library yang terlalu banyak
+
+Dependency Management
+Masalah yang sudah kita bahas sebelumnya, bisa kita hindari jika kita menggunakan Dependency Management Tool
+Dependency Management Tool bertugas untuk mendownload semua library yang kita butuhkan beserta library yang dibutuhkan oleh library yang kita gunakan
+Semua dilakukan secara otomatis
+Dan juga Dependency Management Tool bisa download library sesuai dengan versi yang dibutuhkan secara otomatis
+
+Pengenalan Composer
+Composer adalah salah satu Dependency Management Tool yang populer untuk PHP
+Composer terinspirasi dari dependency management NPM (nodejs) dan Bundler (ruby)
+Dengan Composer, kita cukup membuat konfigurasi file yang berisi dependency yang kita butuhkan
+Composer akan secara otomatis download semua library dan dependency nya yang dibutuhkan sesuai dengan versi yang kita gunakan
+Kita juga bisa update versi library yang kita gunakan dengan mudah hanya dengan mengubah versi di file konfigurasi yang terdapat di project kita
+https://getcomposer.org/ 
+
+Cara Kerja Composer
+
+Menginstall Composer
+https://getcomposer.org/download/ 
+Untuk menginstall Composer sangatlah sederhana, kita cukup download binary file composer, lalu masukkan ke dalam path directory bin PHP, atau bisa gunakan directory terpisah, namun kita perlu menambahkan ke PATH lagi jika menggunakan directory terpisah
+Setelah menginstall Composer di PATH, kita bisa gunakan perintah berikut di terminal / command line untuk mengecek versi composer yang sudah terinstall :
+composer --version
+
+Membuat Project Composer
+Untuk membuat project composer sangat sederhana, kita cukup membuat file composer.json pada project PHP kita
+Oleh karena itu, kita bisa menambahkan di project baru ataupun di project lama
+Namun jika ingin secara otomatis, kita bisa menggunakan perintah :
+composer init
+
+Composer Init
+
+composer.json
+
+Menginstall Dependency
+Setelah kita membuat project Composer, selanjutnya kita perlu menginstall dependency
+Walaupun sampai sekarang kita belum menambah dependency apapun, tapi itu tidak masalah
+Untuk menginstall dependency, kita bisa menggunakan perintah :
+composer update
+Perintah composer update, akan menginstall semua dependency yang terdapat di file composer.json, lalu semua dependency akan di update di file composer.lock
+Hasil semua instalasi dependency, akan disimpan di folder vendor
+
+composer update
+
+Hello World
+Composer secara otomatis akan menyimpan semua library yang kita gunakan di directory vendor
+Lantas bagaimana cara include file library nya?
+Kita tidak perlu melakukan satu per satu, kita cukup menggunakan file /vendor/autoload.php yang sudah secara otomatis di generate oleh composer
+File autoload.php tersebut bisa secara otomatis meng-include class-class yang kita butuhkah di library
+Jadi di file PHP kita, kita cukup hanya menambahkan autoload.php saja
+
+Kode : Hello World
