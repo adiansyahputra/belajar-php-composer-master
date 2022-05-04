@@ -137,4 +137,223 @@ Contoh library yang digunakan ketika development adalah unit test misalnya
 Untuk menambah library, kita bisa tambahkan di composer dengan attribute require (untuk library aplikasi), dan require-dev (untuk library development)
 
 Composer Dependency
+    "require": {
+        "php" : ">=8.0",
+        "programmerzamannow/belajar-php-composer-hello" : "2.0.0",
+        "monolog/monolog" : "2.2.0"
+    },
 
+Versi Library
+Saat menambahkan library, kita perlu menentukan versi berapa yang akan kita gunakan
+Ada beberapa cara menggunakan versi library di composer, semuanya tertulis di halaman resmi composer : https://getcomposer.org/doc/articles/versions.md 
+Version di Composer mengikuti Semantic Versioning https://semver.org/ 
+
+Kode : Menambah Library Monolog
+        "monolog/monolog" : "2.2.0"
+
+Jangan Lupa
+Setelah menambah library, biasakan melakukan update : composer update
+Dan melakukan generate autoload : composer dump-autoload
+
+Hasil Composer Update
+
+Kode : Mencoba Monolog
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+$log = new Logger("ProgrammerZamanNow");
+$log->pushHandler(new StreamHandler("application.log", Logger::INFO));
+
+$log->info("Hello World");
+$log->info("Selamat Belajar Composer");
+
+Membuat Library
+
+Library
+Sekarang kita sudah tahu bagaimana menggunakan Composer di project aplikasi kita
+Sekarang pertanyaannya, bagaimana jika kita ingin membuat library?
+Library yang bisa digunakan di project kita atau oleh project orang lain?
+Composer tidak hanya mendukung pembuatan project, namun juga library
+
+Membuat Library
+
+Kode : composer.json
+  "require": {
+    "php": ">=8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "ProgrammerZamanNow\\Belajar\\": "src/"
+    }
+  }
+Kode : Class Customer
+<?php
+
+namespace ProgrammerZamanNow\Belajar;
+
+class Customer
+{
+
+    public function __construct(private string $name)
+    {
+    }
+
+    public function sayHello(string $name = "Guest"): string
+    {
+        return "Hello $name, My Name is $this->name";
+    }
+}
+
+Upload ke Repository
+Setelah selesai membuat library, kita bisa upload library yang sudah kita buat ke Git Repository
+Ada banyak Git Repository yang gratis, contohnya adalah Github
+Pada course ini saya tidak akan membahas tentang Git, karena Git dibuat dalam course terpisah
+
+Contoh Git Repository
+
+Membuat Release atau Tag
+
+Download dari Repository
+Setelah library kita di upload ke repository, kita bisa menggunakan library tersebut di project kita
+Untungnya composer juga terintegrasi dengan Git repository, jadi kita bisa menambahkan git repository sebagai composer repository
+
+Kode : Menambah Dependency
+{
+    "name": "programmerzamannow/belajar-php-composer",
+    "description": "Belajar PHP Composer",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Eko Kurniawan Khannedy",
+            "email": "echo.khannedy@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "ProgrammerZamanNow\\" : "src/"
+        }
+    },
+    "require": {
+        "php" : ">=8.0",
+        "programmerzamannow/belajar-php-composer-hello" : "2.0.0",
+        "monolog/monolog" : "2.2.0"
+    },
+    "scripts": {
+        "jalankan-server" : "php -S localhost:8080",
+        "hello" : "echo 'Hello World'"
+    }
+}
+
+Kode : Hello Library
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+$customer = new \ProgrammerZamanNow\Belajar\Customer("Eko");
+
+echo $customer->sayHello() . PHP_EOL;
+echo $customer->sayHello("Budi") . PHP_EOL;
+
+Upgrade Versi Library
+Saat membuat library, sudah pasti kita akan melakukan proses update dan upgrade
+Untuk melakukan upgrade library, caranya cukup mudah, kita hanya tinggal membuat update kode library, lalu membuat release atau tag baru
+
+Kode : Update Kode Library
+<?php
+
+namespace ProgrammerZamanNow\Belajar;
+
+class Customer
+{
+
+    public function __construct(private string $name)
+    {
+    }
+
+    public function sayHello(string $name = "Guest"): string
+    {
+        return "Hello $name, My Name is $this->name";
+    }
+}
+
+Membuat Release atau Tag Baru
+
+Kode : Update Versi Library
+    "require": {
+        "php" : ">=8.0",
+        "programmerzamannow/belajar-php-composer-hello" : "2.0.0",
+        "monolog/monolog" : "2.2.0"
+    },
+
+Submit ke Packagist
+
+Packagist
+Khusus OpenSource library, kita juga bisa submit ke Packagist
+Caranya pun sangat mudah, kita cukup registrasi, lalu submit repository kita di Github
+Packagist bisa secara otomatis mendeteksi versi library kita sesuai dengan Tag atau Release di Git
+
+Submit ke Packagist
+
+Library di Packagist
+
+Keuntungan Menggunakan Packagist
+Kita tidak perlu menambahkan repository git di composer.json satu per satu
+Bisa sync secara otomatis ketika ada release versi baru
+
+Kode : Update composer.json
+    "autoload": {
+        "psr-4": {
+            "ProgrammerZamanNow\\" : "src/"
+        }
+    },
+    "require": {
+        "php" : ">=8.0",
+        "programmerzamannow/belajar-php-composer-hello" : "2.0.0",
+        "monolog/monolog" : "2.2.0"
+    },
+
+Fitur Lainnya
+Sebenarnya, sampai disini teman-teman sudah bisa mulai menggunakan composer
+Karena tujuan composer memang untuk dependency management
+Namun selain dependency management, masih banyak lagi fitur-fitur tambahan yang terdapat di composer
+Kita akan bahas sekilas saja, dan teman-teman bisa eksplore lebih dalam jika tertarik dengan fitur-fitur lainnya diluar dependency management
+
+Script
+Fitur ini bisa digunakan untuk membuat custom script
+Dengan custom script ini, kita bisa menggunakan composer untuk membuat perintah misal :
+composer script-saya
+
+Kode : Contoh Script
+    "scripts": {
+        "jalankan-server" : "php -S localhost:8080",
+        "hello" : "echo 'Hello World'"
+    }
+
+Private Repository
+Saat kita membuat aplikasi di perusahaan, sudah pasti project dan library nya tidak akan public, alias private
+Composer juga mendukung private repository dengan menambahkan authentication
+Tiap jenis repository berbeda-beda cara authentication nya
+Kita bisa lihat di dokumentasinya https://getcomposer.org/doc/articles/authentication-for-private-packages.md 
+
+Plugin
+Kita juga bisa mengubah atau meningkatkan fungsionalitas composer itu sendiri 
+Untuk hal ini, di composer terdapat fitur plugin
+https://getcomposer.org/doc/articles/plugins.md 
+
+Vendor Binary
+Kadang library tidak hanya berisi kode PHP saja
+Kadang library juga berisi binary file untuk dieksekusi, contohnya jika teman-teman menggunakan library PHPUnit
+Fitur ini di composer bernama Vendor Binary
+https://getcomposer.org/doc/articles/vendor-binaries.md 
+
+Dan lain-lain
+https://getcomposer.org/doc/ 
+
+Materi Selanjutnya
+PHP Unit Test
+Perbanyak Studi Kasus
+Belajar Framework (Laravel atau Codeigniter)
