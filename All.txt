@@ -73,3 +73,68 @@ Selain itu, kita juga bisa memasukkan source code di project kita ke autoload ag
 Namun agar bisa autoload, ada standar yang perlu kita ikuti
 
 Kode : Autoload
+  "require": {
+    "php": ">=8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "ProgrammerZamanNow\\Belajar\\": "src/"
+    }
+  }
+
+composer dump-autoload
+Setelah kita menambah autoload, kita perlu melakukan generate ulang file autoload.php 
+Untuk melakukan itu, kita bisa menggunakan perintah :
+composer dump-autoload
+
+Aturan Pembuatan Source Code
+Pada composer.json sebelumnya, kita sudah menggunakan namespace ProgrammerZamanNow di directory src
+Artinya jika kita import class di namespace ProgrammerZamanNow, nama dia akan include file di directory src
+Jika namespace nya ProgrammerZamanNow, maka foldernya adalah src, jika namespace nya ProgrammerZamanNow\Data, maka foldernya adalah src/Data
+Sedangkan untuk nama file, harus sama dengan nama class, jika nama class nya People, maka nama file harus People.php
+
+Struktur Directory
+
+Kode : Class People
+<?php
+
+namespace ProgrammerZamanNow\Data;
+
+class People
+{
+
+    public function __construct(private string $name)
+    {
+    }
+
+    public function sayHello(string $name)
+    {
+        echo "Hello $name, My Name is $this->name";
+    }
+}
+
+Kode : Menggunakan Autoload
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+use ProgrammerZamanNow\Data\People;
+
+$people = new People("Eko");
+
+echo $people->sayHello("Budi") . PHP_EOL;
+
+Repository
+Repository merupakan tempat semua dependency di simpan
+Secara default, composer menggunakan repository Packagist
+https://packagist.org/ 
+Kita juga bisa menambahkan repository selain packagist jika mau : https://getcomposer.org/doc/05-repositories.md 
+
+Menambah Dependency
+Salah satu keuntungan menggunakan Composer adalah, kita bisa dengan mudah menambahkan dependency library yang kita butuhkan
+Terdapat dua jenis library di composer, library yang digunakan  ketika development, dan library yang digunakan ketika aplikasi berjalan
+Contoh library yang digunakan ketika development adalah unit test misalnya
+Untuk menambah library, kita bisa tambahkan di composer dengan attribute require (untuk library aplikasi), dan require-dev (untuk library development)
+
+Composer Dependency
+
