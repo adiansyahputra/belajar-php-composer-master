@@ -58,3 +58,18 @@ File autoload.php tersebut bisa secara otomatis meng-include class-class yang ki
 Jadi di file PHP kita, kita cukup hanya menambahkan autoload.php saja
 
 Kode : Hello World
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+use ProgrammerZamanNow\Eko;
+
+echo "Hello World Composer" . PHP_EOL;
+
+Autoload
+Composer menggunakan fitur PHP Class Autoload untuk load class yang terdapat di directory vendor
+https://www.php.net/manual/en/language.oop5.autoload.php 
+Selain itu, kita juga bisa memasukkan source code di project kita ke autoload agar kita tidak perlu melakukan include satu per satu file PHP class nya
+Namun agar bisa autoload, ada standar yang perlu kita ikuti
+
+Kode : Autoload
